@@ -47,21 +47,6 @@ def show_bigram_chart(text, top_n=20):
     ax.set_xticklabels(common_bigrams.keys(), rotation=45, ha='right')
     st.pyplot(fig)
 
-def show_sentiment(text):
-    blob = TextBlob(text)
-    polarity = blob.sentiment.polarity
-    subjectivity = blob.sentiment.subjectivity
-
-    st.markdown("🧠 Sentiment Analysis")
-    st.write(f"**Polarity:** {polarity:.2f} (−1 = negative, +1 = positive)")
-    st.write(f"**Subjectivity:** {subjectivity:.2f} (0 = objective, 1 = subjective)")
-
-    if polarity > 0.2:
-        st.success("Overall sentiment is positive.")
-    elif polarity < -0.2:
-        st.error("Overall sentiment is negative.")
-    else:
-        st.info("Overall sentiment is neutral or mixed.")
 
 def gen_visuals(uploaded):
     iobytes = uploaded.read()
@@ -71,7 +56,7 @@ def gen_visuals(uploaded):
         text = extract_text_from_word(iobytes)
 
     st.subheader("Choose Visualization Type")
-    vis_type = st.radio("", ["Word Cloud", "Frequency Bar Chart","Bigram Bar Chart", "Sentiment Analysis"])
+    vis_type = st.radio("", ["Word Cloud", "Frequency Bar Chart","Bigram Bar Chart"])
 
     if vis_type == "Word Cloud":
         show_wordcloud(text)
@@ -79,8 +64,7 @@ def gen_visuals(uploaded):
         show_frequency_chart(text)
     elif vis_type == "Bigram Bar Chart":
         show_bigram_chart(text)
-    elif vis_type == "Sentiment Analysis":
-        show_sentiment(text)
+   
 
 # Streamlit UI
 st.set_page_config(layout='centered')
